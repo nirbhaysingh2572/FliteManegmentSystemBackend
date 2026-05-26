@@ -3,12 +3,12 @@
     2. install dependenceis
         - using     `npm install`
     3. create .env file 
-    ```
+    ```env
         PORT = <your port>
     ```
     4. creat config.json at src/config/
         - and add code
-    ```
+    ```json
         {
             "development": {
                 "username": <your db username>,
