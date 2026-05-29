@@ -55,7 +55,7 @@ class Ripository{
 
     async getAll(filter){
         try{
-            const result = this.model.findAll();
+            const result = this.model.findAll(filter);
             console.log(result);
             return result;
         }

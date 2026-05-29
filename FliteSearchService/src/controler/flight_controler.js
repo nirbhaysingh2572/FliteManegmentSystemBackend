@@ -5,7 +5,7 @@ const flightService = new FlightService();
  
 create = async (req,res) => {
     try{
-        const flight = await flightService.creat(req.body);
+        const flight = await flightService.create(req.body);
         return res.status(201).json({
             data : flight,
             succses : true,
@@ -25,7 +25,7 @@ create = async (req,res) => {
 
 update = async (req,res) => {
     try{
-        const flight = await flightService.update(req.query.id, req.body);
+        const flight = await flightService.update(req.params.id, req.body);
         return res.status(201).json({
             data : flight,
             succses : true,
@@ -45,7 +45,7 @@ update = async (req,res) => {
 
 destroy = async (req,res) => {
     try{
-        const response = await flightService.delete(req.query.id);
+        const response = await flightService.delete(req.params.id);
         return res.status(201).json({
             data : response,
             succses : true,
@@ -65,7 +65,7 @@ destroy = async (req,res) => {
 
 get = async (req,res) => {
     try{
-        const flight = await flightService.find(req.query.id);
+        const flight = await flightService.find(req.params.id);
         return res.status(201).json({
             data : flight,
             succses : true,
