@@ -6,8 +6,9 @@ const userService = new UserService();
 create = async (req,res)=>{
     try{
         const user = await userService.create(req.body);
+        const {password, ...userdata} = user.toJSON();
         return res.status(201).json({
-            data: user,
+            data: userdata,
             succses:true,
             massage: "sucessfully created user",
             error:{}
