@@ -19,7 +19,7 @@ create = async (req,res)=>{
     catch(error){
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             data: {},
-            succses:true,
+            succses:false,
             massage: "some error in user creation",
             error:error
         });
@@ -38,17 +38,64 @@ destroy = async (req,res)=>{
         });
     }
     catch(error){
-        return res.status(StatusCode.INTERNAL_SERVER_ERROR).json({
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
             data: {},
-            succses:true,
+            succses:false,
             massage: "some error in user deletion",
             error:error
         });
     }
 }
 
+signin = async (req, res)=>{
+    try{
+        // destructure ob to prevent sending any extra info 
+        const data = {
+            userName: req.body.userName,
+            email: req.body.email,
+            password: req.body.password
+        };
+        const response = await userService.sign(data);
+        return res.status(StatusCodes.OK).json({
+            data: response,
+            succses:true,
+            massage: "sucessfully signing user",
+            error:{}
+        });
+    }
+    catch(error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            data:{},
+            succses:false,
+            massage: "some error in user sign",
+            error:error
+        });
+    }
+}
+
+isAuthenticated = async (req,res) => {
+    try{
+        const response = await userService.isAuthenticated(req.body);
+        return res.status(StatusCodes.OK).json({
+            data: response,
+            succses:true,
+            massage: "sucessfully authenticated user",
+            error:{}
+        });
+    }
+    catch(error){
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            data:{},
+            succses:false,
+            massage: "some error in user authentication",
+            error:error
+        });
+    }
+}
 
 module.exports = {
     create,
-    destroy
+    destroy,
+    signin,
+    isAuthenticated,
 }

@@ -6,7 +6,23 @@ const { UserMiddelware } = require('../../middelwares/index');
 
 const router = express.Router();
 
-router.post('/', UserMiddelware.createUserValidator, UserControler.create);
-router.delete('/:id', UserControler.destroy);
+router.post('/signup', 
+    UserMiddelware.createUserValidator, 
+    UserControler.create
+);
+
+router.post('/signin',
+    UserMiddelware.signUserValidator,
+    UserControler.signin
+);
+
+router.get('/isAuthenticated',
+    UserControler.isAuthenticated
+);
+
+router.delete('/:id',
+    UserControler.destroy
+);
+
 
 module.exports = router;
