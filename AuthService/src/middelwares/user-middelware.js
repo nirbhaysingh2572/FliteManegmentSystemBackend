@@ -1,5 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 
+const { ValidationError } = require('../utils/error/index');
+
+
 const createUserValidator = (req,res,next)=>{
     if(
         !req.body.email ||
@@ -9,7 +12,7 @@ const createUserValidator = (req,res,next)=>{
             data:{},
             status:false,
             massege:"Atrribute missing",
-            error:"missing madatory proprety"
+            error: new ValidationError()
         });
     }
     
