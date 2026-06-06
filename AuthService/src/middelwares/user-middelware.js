@@ -4,35 +4,63 @@ const { ValidationError } = require('../utils/error/index');
 
 
 const createUserValidator = (req,res,next)=>{
-    if(
-        !req.body.email ||
-        !req.body.password
-    ){
-        return res.status(StatusCodes.BAD_REQUEST).json({
+    try{
+        if(!req.body.email || typeof req.body.email === string ){
+            throw(
+                new ValidationError({
+                    message: "Invalid email !",
+                    explation: "You have not added email or email format not supported !"
+                })
+            );
+        }
+        if(!req.body.password){
+            throw(
+                new ValidationError({
+                    message: "Inavalid Password!",
+                    explation: "please enter possoword Password is madatory !"
+                })
+            );
+        }
+        next()
+    }
+    catch(error){
+        return res.status(error.statusCode).json({
             data:{},
             status:false,
-            massege:"Atrribute missing",
-            error: new ValidationError()
+            massege:error.massege,
+            error: error
         });
     }
-    
-    next();
 };
 
 const signUserValidator = (req,res,next) => {
-    if(
-        (!req.body.email && !req.body.userName)||
-        !req.body.password
-    ){
-        return res.status(StatusCodes.BAD_REQUEST).json({
+    try{
+        if(!req.body.email && !req.body.userName){
+            throw(
+                new ValidationError({
+                    message: "Invalid email or username !",
+                    explation: "You have not send email or username plese enter !"
+                })
+            );
+        }
+        if(!req.body.password){
+            throw(
+                new ValidationError({
+                    message: "Inavalid Password!",
+                    explation: "please enter possoword Password is madatory for singnin !"
+                })
+            );
+        }
+        next()
+    }
+    catch(error){
+        return res.status(error.statusCode).json({
             data:{},
             status:false,
-            massege:"Atrribute missing",
-            error:"missing madatory proprety"
+            massege:error.massege,
+            error: error
         });
     }
-
-    next();
 };
 
 

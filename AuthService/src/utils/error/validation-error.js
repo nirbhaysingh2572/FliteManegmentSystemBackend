@@ -6,11 +6,11 @@ const  AppError  = require('./app-error');
 class ValidationError extends AppError {
     constructor({
         name = "validationErrror", 
-        massege = "Invalid input",
+        message = "Invalid input",
         explation = "You have enter invalid Plese check it and enter again",
         statusCode = StatusCodes.BAD_REQUEST
     }={}){
-        super({name,massege,explation,statusCode});
+        super({name,message,explation,statusCode});
     }
 }
 
