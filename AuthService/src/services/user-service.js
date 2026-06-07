@@ -123,6 +123,33 @@ class UserService{
         }
     }
 
+    async addRole(data){
+        try{
+            let user;
+            if(data.userName)
+                user = await userRepository.getUserByUserName(data.userName);
+            if(!user && data.email)
+                user = await userRepository.getUserByEmail(data.email);
+            
+            if(!user){
+                throw(new ValidationError({
+                   message: "Incorrect userName or email !",
+                   explanations: "user not exit with given userName or password !"
+                }));
+            }
+            const response = await userRepository.addRole(user.id, data.role);
+            return response;
+        }
+        catch(error){
+            if(error.name == "App error"||
+                error.name == "validationError"
+            )
+                throw(error);
+
+            console.log("some error in service layer");
+            throw(new ServiceError());
+        }
+    }
 }
 
 module.exports = UserService;

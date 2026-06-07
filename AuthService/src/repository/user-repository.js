@@ -101,6 +101,32 @@ class UserRepository{
         
     }
 
+    async addRole(userId, roleName){
+        try{
+            const user = await User.findByPk(userId);
+            const role = await Role.findOne({
+                where:{
+                    role:roleName
+                }
+            });
+            if(!role){
+                throw (new ValidationError({
+                    message: "Invalid Role !",
+                    explation: "This Role Not exit recheck your role!"
+                }));
+            }
+            const response = user.addRole(role);
+            return response;
+        }
+        catch(error){
+            if(error.name=='validationError')
+                throw(error);
+            
+            console.log("some error in repository layer");
+            throw(new AppError());
+        }
+    }
+
 }
 
 module.exports = UserRepository;

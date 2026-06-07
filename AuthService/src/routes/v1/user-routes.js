@@ -16,6 +16,10 @@ router.post('/signin',
     UserControler.signin
 );
 
+router.post('/addRole',
+    UserControler.addRole
+)
+
 router.get('/isAuthenticated',
     UserControler.isAuthenticated
 );
