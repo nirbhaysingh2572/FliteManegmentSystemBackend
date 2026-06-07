@@ -23,7 +23,7 @@ const serverStart = async ()=>{
         console.log(`server Started at ${PORT}`);
 
         if(DB_SYNC){
-            db.sequelize.sync();
+            db.sequelize.sync({ alter:true });
         }
 
     });

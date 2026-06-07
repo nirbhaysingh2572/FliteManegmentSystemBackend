@@ -22,7 +22,7 @@ const setupAndStartServer = async () => {
         console.log(`Server started at ${PORT}`);
         // far sync database 
         if(DB_SYNC){
-            db.sequelize.sync();
+            db.sequelize.sync({ alter:true });
         }
     });
 }

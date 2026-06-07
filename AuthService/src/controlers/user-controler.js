@@ -98,9 +98,30 @@ isAuthenticated = async (req,res) => {
     }
 }
 
+isAdmin  = async (req, res) => {
+    try{
+        const response = await userService.isAdmin(req.params.id);
+        return res.status(StatusCodes.OK).json({
+            data: response,
+            succses: true,
+            messege: "succsesfully authrized!",
+            error: {}
+        });
+    }
+    catch(error){
+        return res.status(error.statusCode).json({
+            data: {},
+            succses:false,
+            message:error.message,
+            error: error
+        });
+    }
+}
+
 module.exports = {
     create,
     destroy,
     signin,
     isAuthenticated,
+    isAdmin,
 }

@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User , Role} = require('../models/index');
 const { AppError,ValidationError } = require('../utils/error/index');
 
 class UserRepository{
@@ -81,6 +81,24 @@ class UserRepository{
             console.log("some error in repository");
             throw(new AppError());
         }
+    }
+
+    async isAdmin(userId){
+        try{
+            const user = await User.findByPk(userId);
+            const role = await Role.findOne({
+                where:{
+                    role: 'ADMIN'
+                }
+            });
+            const response = user.hasRole(role);
+            return response;
+        }
+        catch(error){
+            console.log("some error in repository layer");
+            throw(new AppError());
+        }
+        
     }
 
 }

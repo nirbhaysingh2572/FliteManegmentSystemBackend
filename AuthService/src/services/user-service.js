@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const { UserRepository } = require('../repository/index');
 const { JWT_KEY } = require('../config/server-config');
-const { ServiceError } = require('../utils/error/index');
+const { ServiceError,ValidationError } = require('../utils/error/index');
 
 const userRepository = new UserRepository();
 
@@ -52,17 +52,25 @@ class UserService{
                 user = await userRepository.getUserByEmail(data.email);
             
             if(!user){
-                throw(Error("Incorrect userName or email !"));
+                throw(new ValidationError({
+                   message: "Incorrect userName or email !",
+                   explanations: "user not exit with given userName or password !"
+                }));
             }
             const response = bcrypt.compareSync(data.password, user.password);
             if(!response){
-                throw(Error("Incorrect password !"));
+                throw(new ValidationError({
+                   message: "Incorrect password !",
+                   explanations: "you have enter incorrect possword plese check and enter again !"
+                }));
             }
             const token = jwt.sign({userId:user.id}, JWT_KEY);
             return token;
         }
         catch(error){
-            if(error.name == "App error")
+            if(error.name == "App error"||
+                error.name == "validationError"
+            )
                 throw(error);
 
             console.log("some error in service layer");
@@ -74,16 +82,43 @@ class UserService{
         try{
             const  data = jwt.verify(token, JWT_KEY);
             const user = await userRepository.getUserById(data.userId);
-            if(!user)
-                throw(Error("user not exist!"));
+            if(!user){
+                throw(new ValidationError({
+                    message: "user not exit !",
+                    explanation: "token expired or user does not exit with this token"
+                }));
+            }
 
             return true;
         }
         catch(error){
-            if(error.name == "App error")
+            if(error.name == "App error" ||
+                error.name == "validationErrror")
                 throw(error);
             
             console.log("some error in service layer");
+            throw(new ServiceError());
+        }
+    }
+
+    async isAdmin(userId){
+        try{
+            const user = await userRepository.getUserById(userId);
+            if(!user){
+                throw(new ValidationError({
+                    message: "user not exit !",
+                    explanation: "user does not exist with this user id !"
+                }));
+            }
+            const response = await userRepository.isAdmin(userId);
+            return response;
+        }
+        catch(error){
+            if(error.name == "App error" ||
+                error.name == "validationErrror")
+                throw(error);
+
+            console.log("some error in service layer ");
             throw(new ServiceError());
         }
     }

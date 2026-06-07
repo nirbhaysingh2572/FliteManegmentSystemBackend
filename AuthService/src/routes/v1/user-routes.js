@@ -20,6 +20,10 @@ router.get('/isAuthenticated',
     UserControler.isAuthenticated
 );
 
+router.get('/isAdmin/:id',
+    UserControler.isAdmin
+);
+
 router.delete('/:id',
     UserControler.destroy
 );
