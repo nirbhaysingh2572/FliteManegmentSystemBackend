@@ -6,7 +6,14 @@ const bookingService = new BookingService();
 
 create = async (req, res) =>{
     try{
-        const result = 5;
+        //destructure the data before sending furthur
+        const data = {
+            userId: req.body.userId,
+            flightId: req.body.flightId,
+            seats: req.body.seats,
+            price: req.body.price
+        }
+        const result = await bookingService.create(data);
         return res.status(StatusCodes.CREATED).json({
             data: result,
             success: true,
@@ -14,7 +21,7 @@ create = async (req, res) =>{
         });
     }
     catch(error){
-        return res.status(error.statusCode).json({
+        return res.status(400).json({
             data: {},
             success: false,
             message: error.message,
@@ -26,5 +33,5 @@ create = async (req, res) =>{
 
 module.exports = {
     create,
-    
+
 }
