@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+
 const { CityService }= require('../service/index.js');
 
 
@@ -6,7 +8,7 @@ const cityService = new CityService();
 create = async (req,res) => {
     try{
         const city = await cityService.create(req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : city,
             succses : true,
             massage : "succsesfully created city",
@@ -14,11 +16,11 @@ create = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(200).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to creat city",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -26,7 +28,7 @@ create = async (req,res) => {
 update = async (req,res) => {
     try{
         const city = await cityService.update(req.params.id, req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : city,
             succses : true,
             massage : "succsesfully updated city",
@@ -34,11 +36,11 @@ update = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to update city",
-            err :error
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -46,7 +48,7 @@ update = async (req,res) => {
 destroy = async (req,res) => {
     try{
         const response = await cityService.delete(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             succses : true,
             massage : "succsesfully delete city",
@@ -54,11 +56,11 @@ destroy = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to delete city",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -66,7 +68,7 @@ destroy = async (req,res) => {
 get = async (req,res) => {
     try{
         const city = await cityService.get(req.parans.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : city,
             succses : true,
             massage : "succsesfully fetched city",
@@ -74,11 +76,11 @@ get = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to fetched city",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -86,7 +88,7 @@ get = async (req,res) => {
 getAll = async (req,res) =>{
     try{
         const city = await cityService.getAll({});
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : city,
             succses : true,
             massage : "succsesfully fetched city",
@@ -94,11 +96,11 @@ getAll = async (req,res) =>{
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to fetched city",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 }

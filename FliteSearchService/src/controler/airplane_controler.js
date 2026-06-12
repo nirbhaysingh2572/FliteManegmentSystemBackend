@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+
 const { AirplaneService }= require('../service/index.js');
 
 
@@ -6,7 +8,7 @@ const airplaneService = new AirplaneService();
 create = async (req,res) => {
     try{
         const airplane = await airplaneService.create(req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : airplane,
             succses : true,
             massage : "succsesfully created airplane",
@@ -14,11 +16,11 @@ create = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(200).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to creat airplane",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -26,7 +28,7 @@ create = async (req,res) => {
 update = async (req,res) => {
     try{
         const airplane = await airplaneService.update(req.params.id, req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : airplane,
             succses : true,
             massage : "succsesfully updated airplane",
@@ -34,11 +36,11 @@ update = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to update airplane",
-            err :error
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -46,7 +48,7 @@ update = async (req,res) => {
 destroy = async (req,res) => {
     try{
         const response = await airplaneService.delete(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             succses : true,
             massage : "succsesfully delete airplane",
@@ -54,11 +56,11 @@ destroy = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to delete airplane",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -66,7 +68,7 @@ destroy = async (req,res) => {
 get = async (req,res) => {
     try{
         const airplane = await airplaneService.find(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : airplane,
             succses : true,
             massage : "succsesfully fetched airplane",
@@ -74,11 +76,11 @@ get = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to fetched airplane",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 
@@ -95,11 +97,11 @@ getAll = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to fetched airplane",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 }

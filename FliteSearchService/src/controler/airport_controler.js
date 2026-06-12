@@ -1,3 +1,5 @@
+const { StatusCodes } = require('http-status-codes');
+
 const { AirportService }= require('../service/index.js');
 
 
@@ -6,7 +8,7 @@ const airportService = new AirportService();
 create = async (req,res) => {
     try{
         const airport = await airportService.create(req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : airport,
             succses : true,
             massage : "succsesfully created airport",
@@ -14,19 +16,19 @@ create = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(200).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to creat airport",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
 
-update = async (req,res) => {
+update = async (req,res) => {s
     try{
         const airport = await airportService.update(req.params.id, req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : airport,
             succses : true,
             massage : "succsesfully updated airport",
@@ -34,11 +36,11 @@ update = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to update airport",
-            err :error
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -46,7 +48,7 @@ update = async (req,res) => {
 destroy = async (req,res) => {
     try{
         const response = await airportService.delete(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             succses : true,
             massage : "succsesfully delete airport",
@@ -54,11 +56,11 @@ destroy = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to delete airport",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 } 
@@ -66,7 +68,7 @@ destroy = async (req,res) => {
 get = async (req,res) => {
     try{
         const airport = await airportService.find(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : airport,
             succses : true,
             massage : "succsesfully fetched airport",
@@ -74,11 +76,11 @@ get = async (req,res) => {
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to fetched airport",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 
@@ -87,19 +89,19 @@ get = async (req,res) => {
 getAll = async (req,res) => {
     try{
         const result = await airportService.getAll({});
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             succses : true,
-            massage : "succsesfully fetched airport",
+            massage : "succsesfully fetched airports !",
             err :{}
         })
     }
     catch(error){
-        return res.status(201).json({
+        return res.status(error.statusCode).json({
             data : {},
             succses : false,
-            massage : "Not able to fetched airport",
-            err :{error}
+            message : error.message,
+            error: error.explanation
         })
     }
 }
