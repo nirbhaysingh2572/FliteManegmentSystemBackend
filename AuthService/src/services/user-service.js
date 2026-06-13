@@ -65,7 +65,7 @@ class UserService{
                 }));
             }
             const token = jwt.sign({userId:user.id}, JWT_KEY);
-            return token;
+            return {token};
         }
         catch(error){
             if(error.name == "AppError"||
@@ -107,6 +107,13 @@ class UserService{
             return true;
         }
         catch(error){
+            if(error.name == "JsonWebTokenError"){
+                throw(new ValidationError({
+                    message: error.message,
+                    explanation: "you have enter envalid token plese Login again to get service !"
+                }));
+            }
+
             if(error.name == "AppError" ||
                 error.name == "ValidationErrror")
                 throw(error);
