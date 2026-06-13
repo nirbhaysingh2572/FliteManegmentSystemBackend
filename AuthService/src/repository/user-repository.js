@@ -9,7 +9,9 @@ class UserRepository{
             return user;
         }
         catch(error){
-            if(error.name == "SequelizeValidationError"){
+            if(error.name == "SequelizeValidationError" ||
+               error.name == 'SequelizeUniqueConstraintError'
+            ){
 
                 let explanation = [];
                 error.errors.forEach((err)=>{
@@ -21,7 +23,8 @@ class UserRepository{
                     explanation
                 }));
             }
-            cosole.log("some error in repository layer")
+
+            console.log("some error in repository layer")
             throw(new AppError());
         }
 

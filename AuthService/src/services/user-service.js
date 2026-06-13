@@ -20,8 +20,8 @@ class UserService{
             return user;
         }
         catch(error){
-            if(error.name == "App error" ||
-                error.name == "validationErrror")
+            if(error.name == "AppError" ||
+                error.name == "ValidationError")
                 throw(error);
 
             console.log("some error in service layer");

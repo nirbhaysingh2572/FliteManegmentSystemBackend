@@ -2,8 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 
 class AppError extends Error {
     constructor({
-        name = "App error",
-        message = "Enternal server Error !",
+        name = "AppError",
+        message = "Internal server Error !",
         explanation = "service not availble for this time plese try after some time !",
         statusCode = StatusCodes.INTERNAL_SERVER_ERROR
     }={}){
