@@ -73,10 +73,21 @@ class Ripository{
 
     async find(modelId){
         try{
-            const result = this.model.findByPk(modelId);
+            const result = await this.model.findByPk(modelId);
+            if(!result){
+                throw(
+                    new ValidationError({
+                        message: "Invalid requst !",
+                        explanation: `${this.model.name} does not exist for this id !`
+                    })
+                );
+            }
             return result;
         }
         catch(error){
+            if(error.name == "ValidationError")
+                throw(error);
+
             console.log("Somthing went wrong in ripository layre");
             throw (new AppError());
         }
@@ -84,7 +95,7 @@ class Ripository{
 
     async getAll(filter){
         try{
-            const result = this.model.findAll(filter);
+            const result = await this.model.findAll(filter);
             console.log(result);
             return result;
         }

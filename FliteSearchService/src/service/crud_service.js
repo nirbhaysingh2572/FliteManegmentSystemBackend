@@ -12,7 +12,7 @@ class Service{
         }
         catch(error){
             if(error.name == "AppError" ||
-                error.name == "VlidationError"
+                error.name == "ValidationError"
             )
                 throw(error);
 
@@ -28,7 +28,7 @@ class Service{
         }
         catch(error){
             if(error.name == "AppError" ||
-                error.name == "VlidationError"
+                error.name == "ValidationError"
             )
                 throw(error);
 
@@ -57,9 +57,11 @@ class Service{
             return result;
         }
         catch(error){
-            if(error.name == "AppError")
+            if(error.name == "AppError" ||
+                error.name == "ValidationError"
+            )
                 throw(error);
-
+        
             console.log("something went wrong in service layer");
             throw (new ServiceError);
         }
