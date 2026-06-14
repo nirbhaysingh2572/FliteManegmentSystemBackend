@@ -16,18 +16,27 @@ module.exports = {
       },
       arrivalAirportId: {
         type: Sequelize.INTEGER,
+        allowNull: false
       },
       departureAirportId: {
         type: Sequelize.INTEGER,
+        allowNull: false
       },
       arrivalTime: {
         type: Sequelize.DATE,
+        allowNull:false
       },
       departureTime: {
         type: Sequelize.DATE,
+        allowNull:false
       },
       airplaneId: {
         type: Sequelize.INTEGER,
+        allowNull:false
+      },
+      availbleSeats: {
+        type: Sequelize.INTEGER,
+        allowNull:false
       },
       createdAt: {
         allowNull: false,
