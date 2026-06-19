@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { PORT } = require('./config/server-config');
+const { connnectRabbitMQ } = require('./utils/ampq');
 const  ApiRoutes  = require('./routes/index');
 
 
@@ -18,6 +19,9 @@ function serverRun(){
 
     app.listen(PORT, async()=>{
         console.log(`server Runing at ${PORT}`);
+
+        //connect to rabbit mq
+       await connnectRabbitMQ();
 
     });
 

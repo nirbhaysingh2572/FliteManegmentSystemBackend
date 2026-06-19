@@ -2,15 +2,26 @@ const ampqlib = require('amqplib');
 
 const AMPQ_URL = require('../config/server-config');
 
-async function createChannel(){
+
+let channel;
+async function connnectRabbitMQ(){
     try {   
         const connection = await ampqlib.connect(AMPQ_URL);
-        const channel = await connection.createChannel();
+        channel = await connection.createChannel();
+
+        console.log("RabitMQ connected Sucessfully !");
         return channel;
     }
     catch(error){
-        console.log("error during creating chanel :", error)
+        console.log("error during connectiong to RabbitMQ :", error)
     }
+}
+
+function getChannel(){
+    if(!channel){
+        console.log("RabbitMq is not connnected !");
+    }
+    return channel;
 }
 
 
@@ -29,7 +40,8 @@ async function publishMessage(channel, exchange, key, msg){
 
 
 module.exports = {
-    createChannel,
+    connnectRabbitMQ,
+    getChannel,
     publishMessage,
 
 }
