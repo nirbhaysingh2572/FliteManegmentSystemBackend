@@ -47,10 +47,21 @@ class BookingRepository {
 
     async get(bookingId){
         try{
-            const result = await Booking.findByPk(bookingId);
-            return result;
+            const booking = await Booking.findByPk(bookingId);
+            if(!booking){
+                throw(
+                    new ValidationError({
+                        message:"Invalid Booking ID !",
+                        explanation: "No booking exist With this BookigID !"
+                    })
+                );
+            }
+            return booking;
         }
         catch(error){
+            if(error.name=="ValidationError")
+                throw(error);
+
             console.log("some Error in repository Layer ");
             throw(
                 new AppError()

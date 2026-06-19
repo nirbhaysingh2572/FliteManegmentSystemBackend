@@ -29,8 +29,49 @@ create = async (req, res) =>{
     }
 };
 
+get = async (req, res) =>{
+    try{
+        const result = await bookingService.get(req.params.id);
+        return res.status(StatusCodes.OK).json({
+            data: result,
+            status: true,
+            message: "sucessfully fech a booking !",
+            error: {}
+        });
+    }
+    catch(error){
+        return res.status(error.statusCode).json({
+            data: {},
+            status: false,
+            message: error.message,
+            error: error.explanation
+        });
+    }
+}
+
+getAll = async (req, res) =>{
+     try{
+        const result = await bookingService.getall(req.params.id);
+        return res.status(StatusCodes.OK).json({
+            data: result,
+            status: true,
+            message: "sucessfully feched all bookings !",
+            error: {}
+        });
+    }
+    catch(error){
+        return res.status(error.statusCode).json({
+            data: {},
+            status: false,
+            message: error.message,
+            error: error.explanation
+        });
+    }
+}
 
 module.exports = {
     create,
+    get,
+    getAll,
 
 }

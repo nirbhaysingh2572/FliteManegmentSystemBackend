@@ -65,7 +65,31 @@ class BookingService{
         }
     }
 
-    
+    async get(bookingId){
+        try{
+            const booking = bookingRepository.get(bookingId);
+            return booking;
+        }
+        catch(error){
+            if(error.name=="ValidationError")
+                throw(error);
+            
+            console.log("some error in service Layer !");
+            throw (new ServiceError());
+        }
+    }
+
+    async getall(filter){
+        try{
+            const bookings = bookingRepository.getAll(filter);
+            return bookings;
+        }
+        catch(error){
+
+            console.log("some error in service Layer !");
+            throw (new ServiceError());
+        }
+    }
 
 
 }

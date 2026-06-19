@@ -12,6 +12,14 @@ router.post('/booking',
     BookingControler.create
 );
 
+router.get('/booking/:id', 
+    BookingControler.get
+);
+
+router.get('/booking', 
+    BookingControler.getAll
+);
+
 
 
 module.exports = router;
