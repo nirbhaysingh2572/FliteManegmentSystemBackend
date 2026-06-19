@@ -3,6 +3,7 @@ const express = require('express');
 
 const { PORT } = require("./config/server-config");
 const { connnectRabbitMQ } = require('./utils/ampq');
+const { BookingMailControler } = require('./controlers/index');
 
 const app = express();
 
@@ -14,6 +15,9 @@ const startServer = async ()=>{
 
         //connect RabitMQ
         await connnectRabbitMQ();
+
+        //call bookingcontroler to excute there task
+        BookingMailControler.bookingMail();
 
     });
     
