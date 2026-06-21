@@ -3,13 +3,15 @@ const { StatusCodes } = require('http-status-codes');
 const { ValidationError } = require('../utils/error/index');
 
 
-const createUserValidator = (req,res,next)=>{
+const signupUserValidator = (req,res,next)=>{
     try{
-        if(!req.body.email || typeof req.body.email === String ){
+        if(!req.body  || 
+            !req.body.email
+        ){
             throw(
                 new ValidationError({
                     message: "Invalid email !",
-                    explation: "You have not added email or email format not supported !"
+                    explanation: "You have not added email or email format not supported !"
                 })
             );
         }
@@ -17,7 +19,7 @@ const createUserValidator = (req,res,next)=>{
             throw(
                 new ValidationError({
                     message: "Inavalid Password!",
-                    explation: "please enter possoword Password is madatory !"
+                    explanation: "please enter possword Password is madatory for signup!"
                 })
             );
         }
@@ -33,13 +35,15 @@ const createUserValidator = (req,res,next)=>{
     }
 };
 
-const signUserValidator = (req,res,next) => {
+const signinUserValidator = (req,res,next) => {
     try{
-        if(!req.body.email && !req.body.userName){
+        if( !req.body || 
+            (!req.body.email && !req.body.userName)
+        ){
             throw(
                 new ValidationError({
                     message: "Invalid email or username !",
-                    explation: "You have not send email or username plese enter !"
+                    explanation: "You have not send email and userName plese enter valid email or userName !"
                 })
             );
         }
@@ -47,7 +51,7 @@ const signUserValidator = (req,res,next) => {
             throw(
                 new ValidationError({
                     message: "Inavalid Password!",
-                    explation: "please enter possoword Password is madatory for singnin !"
+                    explanation: "please enter possoword Password is madatory for singnin !"
                 })
             );
         }
@@ -65,6 +69,6 @@ const signUserValidator = (req,res,next) => {
 
 
 module.exports = {
-    createUserValidator,
-    signUserValidator,
+    signupUserValidator,
+    signinUserValidator,
 }

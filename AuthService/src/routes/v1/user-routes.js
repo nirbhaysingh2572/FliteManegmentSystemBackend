@@ -7,12 +7,12 @@ const { UserMiddelware } = require('../../middelwares/index');
 const router = express.Router();
 
 router.post('/signup', 
-    UserMiddelware.createUserValidator, 
+    UserMiddelware.signupUserValidator, 
     UserControler.create
 );
 
 router.post('/signin',
-    UserMiddelware.signUserValidator,
+    UserMiddelware.signinUserValidator,
     UserControler.signin
 );
 
