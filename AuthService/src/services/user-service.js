@@ -104,7 +104,7 @@ class UserService{
                 }));
             }
 
-            return user.userId;
+            return user.id;
         }
         catch(error){
             if(error.name == "JsonWebTokenError"){
@@ -137,7 +137,7 @@ class UserService{
         }
         catch(error){
             if(error.name == "AppError" ||
-                error.name == "ValidationErrror")
+                error.name == "ValidationError")
                 throw(error);
 
             console.log("some error in service layer ");

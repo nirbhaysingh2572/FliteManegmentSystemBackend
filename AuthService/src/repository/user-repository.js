@@ -94,10 +94,21 @@ class UserRepository{
                     role: 'ADMIN'
                 }
             });
-            const response = user.hasRole(role);
+            const response = await user.hasRole(role);
+            if(!response){
+                throw(
+                    new ValidationError({
+                        message: "Anoutherized !",
+                        explanation:"User not autherzed for this you are not admin"
+                    })
+                );
+            }
             return response;
         }
         catch(error){
+            if(error.name == "ValidationError")
+                throw(error);
+
             console.log("some error in repository layer");
             throw(new AppError());
         }
