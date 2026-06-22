@@ -151,11 +151,11 @@ const authenticateAndValidateParamsUserId = async (req, res, next) => {
         next();
     }
     catch(error){
-        return res.status(StatusCodes.UNAUTHORIZED).json({
+        return res.status(error.statusCode).json({
             data: {}, 
             sucess: false,
-            message:"Not Autherized!",
-            error: "user is not autherized for this requset!"
+            message:error.message,
+            error: error.explanation
         });
     }
 }
