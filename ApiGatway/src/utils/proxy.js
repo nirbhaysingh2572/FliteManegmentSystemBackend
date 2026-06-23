@@ -24,19 +24,19 @@ const ErrorHandeler = (service = "someService")=>{
 
 
 const FlightSearchServiceProxy =  createProxyMiddleware({
-                                    target,
+                                    target: FLIGHTSEARCH_SERVICE_PATH,
                                     changeOrigin: true,
                                     onError: ErrorHandeler('FlightSearchService')
                                 });
 
 const AuthServiceProxy =  createProxyMiddleware({
-                                    target,
+                                    target: AUTH_SERVICE_PATH,
                                     changeOrigin: true,
                                     onError: ErrorHandeler('AuthService')
                                 });
                                 
 const BookingServiceProxy =  createProxyMiddleware({
-                                    target,
+                                    target: BOOKING_SERVICE_PATH,
                                     changeOrigin: true,
                                     onError: ErrorHandeler('BookingService')
                                 });
