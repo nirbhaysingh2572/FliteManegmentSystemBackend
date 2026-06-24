@@ -119,7 +119,7 @@ const validateaddRole = (req, res, next) => {
         next();
     }
     catch(error){
-        console.log(error);
+
         return res.status(error.statusCode).json({
             data: {},
             sucess: false,

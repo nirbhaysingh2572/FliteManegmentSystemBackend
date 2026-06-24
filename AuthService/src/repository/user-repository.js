@@ -47,7 +47,13 @@ class UserRepository{
 
     async getUserById(userId){
         try{   
-            const user = await User.findByPk(userId);
+            const user = await User.findByPk(userId, {
+                include:[
+                    {
+                        model: Role
+                    }
+                ]
+            });
             return user;
         }
         catch(error){
